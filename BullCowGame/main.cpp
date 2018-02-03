@@ -8,50 +8,63 @@
 
 #include <iostream>
 #include <string>
-
-using namespace std;
+#include "FBullCowGame.hpp"
 
 void PrintIntro();
 void PlayGame();
-string GetGuessAndPrintBack();
+std::string GetGuess();
+bool AskToPlayAgain();
 
 int main(int argc, const char * argv[]) {
     
-    PrintIntro();
-    PlayGame();
+    bool bPlayAgain = false;
     
+    do{
+        PrintIntro();
+        PlayGame();
+        bPlayAgain = AskToPlayAgain();
+    }
+    while(bPlayAgain);
     return 0;
 }
 
 void PrintIntro() {
     // uvod
     constexpr int WORLD_LENGTH = 5;
-    cout << "Welcome to bulls and cows" << endl;
-    cout << "Can you guess the world with " << WORLD_LENGTH;
-    cout << " characters" << endl;
+    std::cout << "Welcome to bulls and cows" << std::endl;
+    std::cout << "Can you guess the world with " << WORLD_LENGTH;
+    std::cout << " characters" << std::endl;
     return;
 }
 
-string GetGuessAndPrintBack() {
+std::string GetGuess() {
     
     //vprasaj igralca
-    string Guess = "";
-    cout << "Type your answer here: ";
-    getline(cin, Guess);
-    
-    //odgovori
-    cout << "You typed " << Guess;
-    cout << " in your console" << endl;
+    std::string Guess = "";
+    std::cout << "Type your answer here: ";
+    std::getline(std::cin, Guess);
     
     return Guess;
 }
 
 void PlayGame(){
     
-    constexpr int NUMBER_OF_TURNS = 5;
-    for(int count = 1; count <= NUMBER_OF_TURNS; count++){
-        GetGuessAndPrintBack();
-        cout << endl;
+    FBullCowGame BCGame;
+    int MaxTries = BCGame.GetMaxTries();
+    
+    for(int count = 1; count <= MaxTries; count++){
+        std::string Guess =GetGuess();
+        std::cout << std::endl;
+        //odgovori
+        std::cout << "You typed " << Guess;
+        std::cout << " in your console" << std::endl;
     }
     
+}
+
+bool AskToPlayAgain(){
+    std::cout << "Do you want to play again (y/n): ";
+    std::string Response = "";
+    std::getline(std::cin, Response);
+    return (Response[0] == 'y') || (Response[0] == 'Y');
 }
