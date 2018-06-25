@@ -14,16 +14,39 @@
 
 #endif /* FBullCowGame_hpp */
 
+using int32 = int;
+using FString = std::string;
+
+//all values initialized to zero
+struct FBullCowCount
+{
+    int32 Bulls = 0;
+    int32 Cows = 0;
+};
+
+enum class EWordStatus
+{
+    OK,
+    Not_ISOGRAM
+};
+
 class FBullCowGame{
 public:
-    void Reset();
-    int GetMaxTries();
-    int GetCurrentTry();
-    bool IsGameWon();
-    bool CheckGuessValidity(std::string);
+    FBullCowGame(); //constructor
     
+    int32 GetMaxTries() const;
+    int32 GetCurrentTry() const;
+    int32 GetHiddenWordLength() const;
+    
+    bool IsGameWon() const;
+    EWordStatus CheckGuessValidity(FString) const;
+    
+    void Reset(); //TODO make more rich return value
+    FBullCowCount SubmitGuess(FString);
     
 private:
-    int MyCurrentTry;
-    int MyMaxTries;
+    //see constructor
+    int32 MyCurrentTry;
+    int32 MyMaxTries;
+    FString MyHiddenWord;
 };
